@@ -69,7 +69,7 @@ button {
 
 .answers_container button {
     border: none;
-    background: none;
+    background-color: #F5F7FB;
     border: 2px solid #4D5B9E;
     color: #293264;
     padding: 0.5rem 1rem;
@@ -142,6 +142,11 @@ button {
     font-size: 2rem;
     margin-top: 3rem;
     text-decoration: none;
+}
+
+.notification {
+    font-size: 2rem;
+    color: #293264;
 }
 
 @media only screen and (max-width: 1050px) {

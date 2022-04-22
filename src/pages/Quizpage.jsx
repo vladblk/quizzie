@@ -1,4 +1,4 @@
-import { useState, useEffect, forwardRef } from 'react';
+import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import Confetti from 'react-confetti';
 import Quiz from '../components/Quiz';
@@ -37,12 +37,66 @@ function Quizpage() {
     }
 
     const holdAnswer = (id) => {
-        setQuiz(prevState => prevState.map(quiz => {
-            return {
-                question: quiz.question,
-                answers: quiz.answers.map(answer => answer.id === id ? { ...answer, isHeld: !answer.isHeld } : answer )
-            }
-        }))
+        setQuiz(prevState => {
+            return prevState.map((quiz) => {
+                let count = 0;
+                quiz.answers.forEach(ans => {
+                    if (ans.isHeld) count++;
+                });
+
+                if (count < 1) {
+                    return {
+                        id: quiz.id,
+                        question: quiz.question,
+                        answers: quiz.answers.map(answer => answer.id === id ? { ...answer, isHeld: !answer.isHeld } : answer)
+                    }
+                } else if ( count === 1 ) {
+                    return {
+                        id: quiz.id,
+                        question: quiz.question,
+                        answers: quiz.answers.map(answer => answer.id === id ? { ...answer, isHeld: false } : answer)
+                    }
+                } else {
+                    return quiz;
+                }
+            })
+        })
+
+        // setQuiz(prevState => {
+
+        //     const newState = [];
+
+        //     for (let i = 0; i < prevState.length; i++) {
+
+        //         const currentQuiz = prevState[i];
+        //         let quiz = {};
+                
+        //         for (let j = 0; j < currentQuiz.answers.length; j++) {
+
+        //             const currentAns = currentQuiz.answers[j];
+
+        //             if (currentAns.id === id) {
+        //                 quiz = {
+        //                     ...currentQuiz,
+        //                     answers: [{
+        //                         ...currentAns,
+        //                         isHeld: !currentAns.isHeld
+        //                     }]
+        //                 };
+
+        //             } else {
+        //                 quiz = currentQuiz;
+        //             }
+
+        //         }
+
+        //         newState.push(quiz);
+
+        //     }
+
+        //     return newState;
+
+        // })
     }
 
     const checkAnswer = () => {
